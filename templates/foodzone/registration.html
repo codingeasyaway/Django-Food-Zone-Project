@@ -1,0 +1,79 @@
+{% extends 'foodzone/base.html'%}
+{% block title %}Registration / Food Zone {% endblock title %}
+
+{% block content %}
+{% load static %}
+{% if status %}
+<script>
+    alert('{{status}}');
+    window.location.href='{% url "login" %}';
+</script>
+{% elif error_status %}
+<script>
+    alert('{{error_status}}');
+    window.location.href='{% url "signup" %}';
+</script>
+{% endif %}
+
+  <!-- Page Header Start -->
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Sign Up</h2>
+                    </div>
+                    <div class="col-12">
+                        <a href="/">Home</a>
+                        <a href="/signup/">Sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header End -->
+
+
+<div class="container">
+    <h3 class="text-center text-success">Create Account</h3>
+    <div class="row">
+
+        <div class="card col-md-6 mx-auto p-4 my-4">
+            <form method="post" action="{% url 'signup' %}" >{% csrf_token %}
+                            <div class="control-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required data-validation-required-message="Please enter your name" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <input type="email" name="ser" class="form-control" id="uemail" placeholder="Your Email" required data-validation-required-message="Please enter your email" />
+                                <p class="help-block text-danger" ></p>
+                            </div>
+                            <div class="control-group">
+                                <input type="password" name="password" class="form-control" id="password"  placeholder="Password" required data-validation-required-message="Please enter a subject" />
+                                <p class="help-block text-danger" ></p>
+                            </div>
+
+
+                 <div class="control-group">
+                                <input type="number" name="number" class="form-control" id="number" placeholder="Contact No" required data-validation-required-message="Please enter a subject" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+
+                            <div>
+                                <button class="btn custom-btn" type="submit" id="signup">Create Account</button>
+                            </div>
+                        </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+$('#password, #confirm_password').on('keyup', function () {
+  if ($('#password').val() == $('#confirm_password').val()) {
+    $('#message').html('Matching').css('color', 'green');
+  } else
+    $('#message').html('Not Matching').css('color', 'red');
+});
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+{% endblock content %}

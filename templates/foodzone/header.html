@@ -1,0 +1,44 @@
+<!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-light navbar-light">
+            <div class="container-fluid">
+                <a href="/" class="navbar-brand">Food <span>Zone</span></a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto">
+                        <a href="/" class="nav-item nav-link">Home</a>
+                        <a href="/about/" class="nav-item nav-link">About</a>
+
+                        <a href="/team/" class="nav-item nav-link">Chef</a>
+                        <a href="/contact/" class="nav-item nav-link">Contact</a>
+                        <a href="/menu/" class="nav-item nav-link">Menu</a>
+                        <a href="/booking/" class="nav-item nav-link">Booking</a>
+                        {% if user.is_authenticated %}
+                        <div class="nav-item dropdown">
+                            <a href="/" class="nav-link dropdown-toggle text-capitalize " data-toggle="dropdown"><i class="fas fa-user"></i> {{user.username}}</a>
+                            <div class="dropdown-menu">
+                                {% if user.is_superuser or user.is_staff%}
+                                 <a href="{% url 'admin:index' %}" class="dropdown-item" target="_blank">Dashboard</a>
+                                {% else %}
+                                <a href="/profile/" class="dropdown-item">Dashboard</a>
+                                {% endif %}
+                                <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="nav-item dropdown">
+                            <a href="/" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i></a>
+                            <div class="dropdown-menu">
+                                <a href="/login/" class="dropdown-item">Login</a>
+                                <a href="/signup/" class="dropdown-item">Sign Up</a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Nav Bar End -->

@@ -1,0 +1,139 @@
+{% extends 'foodzone/base.html'%}
+{% block title %}My Account / Food Zone {% endblock title %}
+
+{% block content %}
+{% load static %}
+  <!-- Page Header Start -->
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-capitalize">{{user.username}} | Dashboard</h2>
+                    </div>
+                    <div class="col-12">
+                        <a href="/">Home</a>
+                        <a href="/profile/" class="text-capitalize">{{user.username}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header End -->
+
+
+</div>
+
+<div class="container">
+
+      <ul class="nav nav-tabs">
+        <li class="active mx-3">
+          <a href="#Dashboard" data-toggle="tab">Dashboard</a>
+        </li>
+        <li class="active mx-3">
+          <a href="#edit_profile" data-toggle="tab">Edit Profile</a>
+        </li >
+        <li class="active mx-3">
+          <a href="#Change_Password" data-toggle="tab">Change Password</a>
+        </li>
+        <li class="active mx-3">
+          <a href="#my_order" data-toggle="tab">My Order</a>
+        </li>
+      </ul>
+
+ {% if user_profile_update_message %}
+ <div class="alert alert-success alert-dismissible my-4">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{user_profile_update_message}}
+</div>
+ {% endif %}
+    {% if change_password_message %}
+ <div class="alert alert-success alert-dismissible my-4">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{change_password_message}}
+</div>
+ {% endif %}
+    {% if change_password_message_error %}
+ <div class="alert alert-danger  alert-dismissible my-4">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{change_password_message_error}}
+</div>
+ {% endif %}
+
+      <div class="tab-content my-4 p-3">
+        <div class="tab-pane active" id="Dashboard">
+
+<div class="container">
+    <div class="row">
+
+        <div class="card col-md-10 text-center mx-auto p-4 my-4">
+            {% if profile.profile_pic %}
+            <a href="/media/{{profile.profile_pic}}">
+            <img src="/media/{{profile.profile_pic}}"  alt="profile" style="border-radius:50%;width:100px;height:100px;">
+
+            </a>
+            {% else %}
+
+            <span class="pic text-capitalize text-center mx-auto" id="pic" style="border-radius:50%;width:100px;height:100px;background-color:green;"><h3 style="line-height:90px;color:white;">{{profile.user.first_name.0}}</h3></span>
+
+            {% endif %}
+
+            <h1 class="text-capitalize mt-3">{{user.username}}</h1><br>
+            <p class="text-capitalize">{{user.email}}</p><br>
+            <p class="text-capitalize">Conatct : {{profile.contact_number}}</p><br>
+            <p>Member Since : {{user.date_joined}}</p><br>
+            <p>Last Login : {{user.last_login}}</p><br>
+
+        </div>
+    </div>
+
+</div>
+
+        </div>
+        <div class="tab-pane" id="edit_profile">
+
+<div class="container">
+    <div class="row">
+
+        <div class="card col-md-10  mx-auto p-4 my-2">
+            <form  method="post" action="{% url 'profile' %}" class="p-4" enctype="multipart/form-data">{% csrf_token %}
+
+        <input type="text" name="name" value="{{user.first_name}}" class="form-control col-12"  placeholder="Enter your username"><br>
+                <input type="email" name="email" value="{{user.email}}" class="form-control col-12 " readonly placeholder="Enter your email address"><br>
+                <input type="number"  name="contact" value="{{profile.contact_number}}"  class="form-control col-12" placeholder="Enter your contact"><br>
+                <input type="text" name="address" value="{{profile.address}}" class="form-control col-12" placeholder="Enter your email address"><br>
+                <input type="file" name="pic"  class="form-control col-12" ><br>
+                <button class="btn btn-success col-12" type="submit" name="user_update">Save Change</button>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+                 </div>
+        <div class="tab-pane" id="Change_Password">
+              <div class="card col-md-10  mx-auto p-4 my-2">
+            <form action="{% url 'profile' %}" method="post" class="p-4">{% csrf_token %}
+
+        <input type="password" name="current_password" class="form-control col-12" placeholder="Enter current password"><br>
+                <input type="password" name="new_password" class="form-control col-12" placeholder="Set new password"><br>
+                <button class="btn btn-success col-12" type="submit" name="update_password">Change Password</button>
+
+            </form>
+              </div>
+        </div>
+        <div class="tab-pane" id="my_order">
+          <p>Order (0)</p>
+        </div>
+
+  </div>
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</div>
+
+
+
+{% endblock content %}
